@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pack Grader</title>
+  <meta name="description" content="Grade used e-motorcycle battery packs from the charger's plug-in current.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111214'/%3E%3Cpath d='M7 20h5l3-9 3 12 3-7h4' fill='none' stroke='%23ecebe7' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-inner">
+      <div class="bar-cell bar-mark">
+        <span class="mark">Pack Grader</span>
+        <span class="tag">Second-life screening</span>
+      </div>
+      <div class="bar-cell" id="clamp" data-state="off">
+        <span class="led" aria-hidden="true"></span>
+        <span class="k">Clamp</span>
+        <span class="v" id="clamp-v">Offline</span>
+      </div>
+      <div class="bar-cell" id="labels" data-level="1" title="Packs the model compares against: stored references plus packs labeled here. Ticks: your labels, 10 or more is strong.">
+        <span class="k">Library</span>
+        <span class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="v"><b id="refs-n">0</b> ref · <b id="labels-n">0</b> lab</span>
+      </div>
+      <div class="bar-cell bar-action">
+        <button id="add" class="btn btn-primary">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
+          New pack
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="panel readout">
+        <div class="panel-head">
+          <span class="k">Charger current</span>
+          <span class="k k-quiet" id="live-note">Last 10 s</span>
+        </div>
+        <div class="big"><span id="amps">0.00</span><em>A</em></div>
+        <svg id="spark" class="spark" viewBox="0 0 400 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </div>
+
+      <div class="panel stock">
+        <div class="panel-head">
+          <span class="k">Stock</span>
+          <span class="k k-quiet" id="avg">–</span>
+        </div>
+        <div class="big"><span id="n-packs">0</span><em>packs</em></div>
+        <div class="dist" id="dist" aria-hidden="true"></div>
+        <div class="dist-key" id="dist-key"></div>
+      </div>
+    </section>
+
+    <section class="panel ledger">
+      <div class="ledger-head" aria-hidden="true">
+        <span>Pack</span><span>Health</span><span class="r">%</span><span class="r">Grade</span>
+      </div>
+      <div id="list" aria-live="polite"></div>
+    </section>
+
+    <p class="foot">
+      Health = energy the pack holds today ÷ the energy on its label. A from 80%, B from 60%.
+      <button id="server" class="foot-link">Server address</button>
+    </p>
+  </main>
+
+  <div id="sheet" class="sheet" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <button class="sheet-x" data-close aria-label="Close">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
+      </button>
+      <div id="sheet-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

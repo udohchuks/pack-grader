@@ -1,0 +1,16 @@
+# Python
+server/.venv/
+__pycache__/
+*.pyc
+
+# Local data (packs registered on this laptop)
+server/packs.db
+
+# Firmware build output
+firmware/build/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
